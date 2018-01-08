@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+<title>REST API - File Upload</title>
+<link
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy"
+	crossorigin="anonymous"></link>
+<style type="text/css">
+div{
+margin:0 auto;
+}
+div#mini-container {
+	max-width: 450px;
+}
+div#container {
+	max-width: 1000px;
+}
+h2{
+text-align:center;
+}
+legend{
+text-align:center;
+}
+div#link-container{
+text-align:center;
+}
+</style>
+
+</head>
+<body>
+	<div id="container">
+
+
+		<div id="response-container" th:if="${message}">
+			<h2 th:text="${message}"></h2>
+		</div>
+<div id="mini-container">
+		<div id="form-container">
+			<form action="/" method="post" enctype="multipart/form-data"
+				onsubmit="return validate()">
+				<fieldset>
+
+					<legend>Upload Your File</legend>
+					<table>
+						<tr>
+							<td>File Description:</td>
+							<td><input type="text" name="meta-data"></input></td>
+						</tr>
+						<tr>
+							<td>File to Upload:</td>
+							<td><input type="file" name="file" id="file" required="true"></input></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td><input type="submit" value="Upload"></input></td>
+						</tr>
+					</table>
+
+				</fieldset>
+			</form>
+		</div>
+
+
+		<div id="file-list-container">
+			<ul>
+				<li th:each="file : ${files}"><a th:href="${file}"
+					th:text="${file}"></a></li>
+			</ul>
+		</div>
+
+		<div id="link-container">
+			<a href="/deleteFiles">click here to delete all the files</a>
+		</div>
+	</div>
+</div>
+	<script>
+		function validate() {
+			var input;
+			input = document.getElementById('file');
+			if (input.files[0].size > 1024 * 1024 * 100) {
+				alert("Maximum allowed file size is less than 100 MB.");
+				return false;
+			}
+			return true;
+		}
+	</script>
+</body>
+</html>
